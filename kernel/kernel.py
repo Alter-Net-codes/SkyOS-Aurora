@@ -40,7 +40,7 @@ def print_boot_screen():
 """
 
     print(colors["sky_blue"] + skyos_art + colors["reset"])
-    print(f"{colors['bright_magenta']}Loading SkyOS 3.0...{colors['reset']}")
+    print(f"{colors['bright_magenta']}Loading SkyOS Aurora 1.0...{colors['reset']}")
     time.sleep(5)
     os.system('cls' if platform.system() == "Windows" else 'clear')
     print(colors["clear"], end="")
