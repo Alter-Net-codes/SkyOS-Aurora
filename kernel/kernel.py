@@ -8,7 +8,7 @@ from datetime import datetime
 
 # hashed password for secutity purposes.
 
-valid_version = "3.0"
+valid_version = "1.0"
 
 colors = {
     "sky_blue": "\033[38;5;39m",
@@ -28,14 +28,14 @@ def print_boot_screen():
 
     skyos_art = r"""
 
-   _____ _           ____   _____ 
-  / ____| |         / __ \ / ____|
- | (___ | | ___   _| |  | | (___  
-  \___ \| |/ / | | | |  | |\___ \ 
-  ____) |   <| |_| | |__| |____) |
- |_____/|_|\_\\__, |\____/|_____/ 
-               __/ |              
-              |___/               
+   _____ _           ____   _____                                     
+  / ____| |         / __ \ / ____|     /\                             
+ | (___ | | ___   _| |  | | (___      /  \  _   _ _ __ ___  _ __ __ _ 
+  \___ \| |/ / | | | |  | |\___ \    / /\ \| | | | '__/ _ \| '__/ _` |
+  ____) |   <| |_| | |__| |____) |  / ____ \ |_| | | | (_) | | | (_| |
+ |_____/|_|\_\\__, |\____/|_____/  /_/    \_\__,_|_|  \___/|_|  \__,_|
+               __/ |                                                  
+              |___/                                                               
     
 """
 
@@ -64,8 +64,8 @@ password_file = os.path.join(root_path, "password.txt")
 signed_in_file = os.path.join(root_path, "signed_in.txt")
 
 def panic(errorCode):   
-    print(f"SkyOS has crashed. Error code: {errorCode}")
-    print("Please report this error to the SkyOS development team.")
+    print(f"SkyOS Aurora has crashed. Error code: {errorCode}")
+    print("Please report this error to the SkyOS Aurora development team.")
     print("The system will now shut down to prevent further issues.")
     print("Shutting down in 10 seconds...")
     with open(signed_in_file, "w") as session_file:
@@ -101,8 +101,8 @@ def welcome():
     else:
         print(f"Good afternoon, {stored_username} welcome back.")
 
-    print("Welcome back to SkyOS! Thank you to all those contributors who worked on this!")
-    print(f"SkyOS {valid_version} written in Python 3.13.7")
+    print("Welcome back to SkyOS Aurora! Thank you to all those contributors who worked on this!")
+    print(f"SkyOS Aurora {valid_version} written in Python 3.13.7")
     print("ALWAYS USE EXIT COMMAND TO EXIT THE OS, DO NOT CLOSE THE WINDOW!")
     print("For more info on the project type: info, help (commands) or copyright.")
     today = datetime.today()
@@ -206,12 +206,12 @@ while True:
             print(f"An error occurred: {e}")
 
     elif command == "info":
-        print("Developed by the SCA and Alter Net codes. All rights reserved.")
+        print("Developed by Alter Net codes. All rights reserved.")
         print("This kernel may be reproduced if it meets the licenses terms. More info in the copyright command.")
-        print(f"Current SkyOS version: {valid_version}")
+        print(f"Current SkyOS Aurora version: {valid_version}")
 
     elif command == "copyright":
-        print("Copyright © 2024-2025 Alter Net codes and the SCA all rights reserved")
+        print("Copyright © 2024-2025 Alter Net codes")
         print("if you are adding on to this software, or want to hold a copy of this software,")
         print("then you can get info on copyright in the 'license' file in the root directory.")
 
@@ -311,15 +311,15 @@ while True:
         print("Screen cleared.")
 
     elif command == "version":
-        print(f"SkyOS version: {valid_version}")
+        print(f"SkyOS Aurora version: {valid_version}")
     
     elif command == "uname":
-        print(f"SkyOS version: {valid_version}")
+        print(f"SkyOS Aurora version: {valid_version}")
         print(f"Username: {username}")
         print(f"Platform: {platform.system()} {platform.release()}")
 
     elif command == "uname -a":
-        print(f"SkyOS version: {valid_version}")
+        print(f"SkyOS Aurora version: {valid_version}")
         print(f"Username: {username}")
         print(f"Platform: {platform.system()} {platform.release()}")
         print(f"Machine: {platform.machine()}")
@@ -327,7 +327,7 @@ while True:
         print(f"Python version: {platform.python_version()}")
 
     elif command == "uname -v":
-        print(f"SkyOS version: {valid_version}")
+        print(f"SkyOS Aurora version: {valid_version}")
         print(f"Python version: {platform.python_version()}")
 
     elif command == "uname -m":
@@ -373,7 +373,7 @@ while True:
               "  -h, --help         display this help and exit")
     
     elif command == "license":
-        print("SkyOS is licensed under the MIT License.\n"
+        print("SkyOS is licensed under the BSD 3-Clause license.\n"
               "You are free to use, modify, and distribute this software as long as you include the original license text.\n"
               "For more details, please refer to the LICENSE file in the root directory.")
 
