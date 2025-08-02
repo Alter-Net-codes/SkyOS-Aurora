@@ -8,7 +8,7 @@ from datetime import datetime
 
 # hashed password for secutity purposes.
 
-valid_version = "1.0"
+valid_version = "1.1"
 
 colors = {
     "sky_blue": "\033[38;5;39m",
@@ -40,7 +40,7 @@ def print_boot_screen():
 """
 
     print(colors["sky_blue"] + skyos_art + colors["reset"])
-    print(f"{colors['bright_magenta']}Loading SkyOS Aurora 1.0...{colors['reset']}")
+    print(f"{colors['bright_magenta']}Loading SkyOS Aurora 1.1...{colors['reset']}")
     time.sleep(5)
     os.system('cls' if platform.system() == "Windows" else 'clear')
     print(colors["clear"], end="")
@@ -78,6 +78,13 @@ setup_script_path = os.path.join(root_path, 'setup', 'setup.py')
 BIOS_location = os.path.join(root_path, 'BIOS')
 apps_dir = os.path.join(root_path, 'apps')
 bios_log_location = os.path.join(root_path, 'bios_log.txt')
+path_location = os.path.join(root_path, 'path.txt')
+
+# write all the programs launchers or 1fileapps to the path file
+open(path_location, 'w').close()  # Clear the file first
+for app in os.listdir(apps_dir):
+    with open(path_location, 'a') as path_file:
+        path_file.write(f"{os.path.join(apps_dir, app)}\n")
 
 def run_setup():
     if os.path.isfile(setup_script_path):
@@ -159,7 +166,7 @@ while True:
         print("info - show information about SkyOS")
         print("copyright - copyright info")
         print("echo - echo back what you type")
-        print("app - run an application")
+        print("app - run an application. you can also run an app by using the app's name. e.g. 'texteditor'")
         print("tree - create a value for tree. use the -p parameter to print the value.")
         print("history - show all command history")
         print("shutdown - shut down the system")
@@ -177,6 +184,17 @@ while True:
         print("uname -a - show all system information")
         print("uname -h - show all parameters for uname plus more help")
         print("license - show the license information for SkyOS")
+
+    elif command in [(name := os.path.splitext(os.path.basename(p))[0]) for p in open(path_location).read().splitlines()]:
+        script_path = next(p for p in open(path_location).read().splitlines() if os.path.splitext(os.path.basename(p))[0] == command)
+        if os.path.isfile(script_path):
+            try:
+                subprocess.run([sys.executable, script_path], check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Error executing the script: {e}")
+            except Exception as e:
+                print(f"An unexpected error occurred: {e}")
+
 
     elif command == "time":
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -378,6 +396,6 @@ while True:
               "For more details, please refer to the LICENSE file in the root directory.")
 
     else:
-        print(command + " is not a valid command. Type 'help' for a list of commands.")
+        print(command + " is not a valid command or executable. Type 'help' for a list of commands.")
 
 panic("NON-NORMAL SHUTDOWN! EMERGENCY!")  # in case the loop somehow breaks
