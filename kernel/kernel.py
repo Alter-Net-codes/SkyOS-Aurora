@@ -5,10 +5,12 @@ import platform
 import time
 import hashlib
 from datetime import datetime
+import requests
+import urllib.request
 
 # hashed password for secutity purposes.
 
-valid_version = "1.1"
+valid_version = "1.1.0"
 
 colors = {
     "sky_blue": "\033[38;5;39m",
@@ -185,6 +187,7 @@ while True:
         print("uname -h - show all parameters for uname plus more help")
         print("license - show the license information for SkyOS")
 
+    # command to run an app
     elif command in [(name := os.path.splitext(os.path.basename(p))[0]) for p in open(path_location).read().splitlines()]:
         script_path = next(p for p in open(path_location).read().splitlines() if os.path.splitext(os.path.basename(p))[0] == command)
         if os.path.isfile(script_path):
@@ -195,6 +198,35 @@ while True:
             except Exception as e:
                 print(f"An unexpected error occurred: {e}")
 
+    elif command == "update":
+        response = requests.get('https://alter-net-codes.github.io/skyosweb/aurora/archive/version.txt')
+        latest_version = response.text.strip()
+        filepath = os.path.join(root_path)
+        if latest_version != valid_version:
+            print(f"A new version of SkyOS Aurora is available: {latest_version}")
+            update_choice = input("Do you want to update? (yes/no): ").strip().lower()
+            if update_choice == "yes":
+                print("Updating SkyOS Aurora...")
+                # Download the latest version
+                listurlget = requests.get(f'https://alter-net-codes.github.io/skyosweb/aurora/archive/{latest_version}/files.txt')
+                file_urls = response.text.strip().splitlines()
+                listfilepath = requests.get(f'https://alter-net-codes.github.io/skyosweb/aurora/archive/{latest_version}/filepath.txt')
+                filepathsdownload = response.text.strip().splitlines()
+                currentfilenum = 0
+                for file_url in file_urls:
+                    currentfilenum += 1
+                    file_url = file_url.strip()
+                    filename = file_url.split('/')[-1]
+                    filepath = listfilepath[currentfilenum]
+                    filepath = os.path.join(f'{root_path}/{filepath}/', filename)
+                    urllib.request.urlretrieve(file_url, filepath)
+                with open(signed_in_file, "w") as session_file:
+                    session_file.write("0")
+                    print("Exiting the OS...")
+                    time.sleep(2)
+                    os._exit(0)
+            else:
+                print("Update skipped.")
 
     elif command == "time":
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -234,8 +266,11 @@ while True:
         print("then you can get info on copyright in the 'license' file in the root directory.")
 
     elif command == "echo":
-        echotxt = input("Echo what: ").strip()
-        print(echotxt)
+        print()
+    elif "echo" in command:
+        echo_text = command.replace("echo ", "").strip()
+        if echo_text:
+            print(echo_text)
 
     elif command == "tree":
         treevalue = input("tree: ")
