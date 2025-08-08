@@ -10,6 +10,16 @@ import urllib.request
 
 # hashed password for secutity purposes.
 
+# Okay, I should explain what a SkyOS Aurora 1.2+ app is.
+# A SkyOS Aurora 1.2+ app is a Python script that is located in in the apps folder,
+# That can be ran by the kernel.
+# Same, same. But diffrent.
+# You can now run multiple files (in a folder inside the apps folder. So the launcher you make will run something like ./apps/myapp/script1.py and ./apps/myapp/script2.py) #
+# from a single app, for devs, this means you can port a whole game or app to SkyOS Aurora, without haing to make it a single file.
+# Of course, each file has to fall back to the main file, which will have to fall back to the kernel.
+# I might make a guide for how to make a SkyOS Aurora 1.2+ app, but for now, you can just follow the current sturcture, then add mutltiple files in the folder you run it from.
+# Installers and stuff will soon be suported.
+
 valid_version = "1.1.0"
 
 colors = {
@@ -223,8 +233,7 @@ while True:
                 with open(signed_in_file, "w") as session_file:
                     session_file.write("0")
                     print("Exiting the OS...")
-                    python = sys.executable
-                    subprocess.Popen([python] + sys.argv)
+                    subprocess.Popen()
                     sys.exit()
             else:
                 print("Update skipped.")
