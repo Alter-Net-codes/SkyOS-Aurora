@@ -2,7 +2,7 @@
 SkyOS Aurora is The continuation of the Open-Source SkyOS project (with restrictions on the open-source part). 
 
 ## Website
-https://Alter-Net-codes.github.io/skyOSweb/aurora 
+[https://Alter-Net-codes.github.io/skyOSweb/aurora ](https://alter-net-codes.github.io/skyosweb/aurora/)
 
 ^ Contrib info is avalible there! As well as downloads!
 
