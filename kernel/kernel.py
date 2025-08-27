@@ -9,7 +9,6 @@ import requests
 import urllib.request
 
 # hashed password for secutity purposes.
-
 # Okay, I should explain what a SkyOS Aurora 1.2+ app is.
 # A SkyOS Aurora 1.2+ app is a Python script that is located in in the apps folder,
 # That can be ran by the kernel.
@@ -20,7 +19,7 @@ import urllib.request
 # I might make a guide for how to make a SkyOS Aurora 1.2+ app, but for now, you can just follow the current sturcture, then add mutltiple files in the folder you run it from.
 # Installers and stuff will soon be suported.
 
-valid_version = "1.1.0"
+valid_version = "1.1.08a2725"
 
 colors = {
     "sky_blue": "\033[38;5;39m",
@@ -158,7 +157,6 @@ if signed_in_status == "0":
         hashed_input_password = hashlib.sha256(password.encode()).hexdigest()
         # Compare the hashed input password with the stored hashed password
         if hashed_input_password == stored_password:
-            print(f"Welcome, {stored_username}!")
             authenticated = True
             welcome()
         else:
@@ -185,7 +183,7 @@ while True:
         print("reboot - reboot the system")
         print("bios - run the bios")
         print("time - show the current time")
-        print("setup - run the setup script to reset your username and password, also able to repair the OS.")
+        print("setup - run the setup script to reset your username and password")
         print("bios log - print out the bios log")
         print("afk - hold the os in a safe environment while you are 'afk'")
         print("exit - exit the OS (do not close the window! use this command instead!)")
@@ -197,7 +195,7 @@ while True:
         print("uname -h - show all parameters for uname plus more help")
         print("license - show the license information for SkyOS")
 
-    # command to run an app/executable by only typing the app/executable name.
+    # command to run an app
     elif command in [(name := os.path.splitext(os.path.basename(p))[0]) for p in open(path_location).read().splitlines()]:
         script_path = next(p for p in open(path_location).read().splitlines() if os.path.splitext(os.path.basename(p))[0] == command)
         if os.path.isfile(script_path):
@@ -212,8 +210,6 @@ while True:
         response = requests.get('https://alter-net-codes.github.io/skyosweb/aurora/archive/version.txt')
         latest_version = response.text.strip()
         filepath = os.path.join(root_path)
-        eeeeeeee = latest_version != valid_version
-        print(eeeeeeee)
         if latest_version != valid_version:
             print(f"A new version of SkyOS Aurora is available: {latest_version}")
             update_choice = input("Do you want to update? (yes/no): ").strip().lower()
@@ -235,10 +231,11 @@ while True:
                 with open(signed_in_file, "w") as session_file:
                     session_file.write("0")
                     print("Exiting the OS...")
-                    subprocess.Popen()
+                    print("Please restart manually to finish the update.")
+                    time.sleep(2)
                     sys.exit()
         else:
-            print("Update skipped.")
+            print("You are up to date!")
 
     elif command == "time":
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
