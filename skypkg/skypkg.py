@@ -21,7 +21,7 @@ installurl = "https://raw.githubusercontent.com/Alter-Net-codes/SkyOS-assets/mai
 if not os.path.isfile("apps.txt"):
     print("Global package list not found on your device. Downloading...")
     try:
-        response = requests.get(f"{installurl}/apps.txt")
+        response = requests.get(f"{installurl}/manifest/apps.txt")
         response.raise_for_status()
         with open("apps.txt", "w") as file:
             file.write(response.text.strip())
@@ -49,7 +49,7 @@ try:
     # Handle --updatelists
     if args.updatelists:
         print("Updating global package lists...")
-        response = requests.get(f"{installurl}/apps.txt")
+        response = requests.get(f"{installurl}/manifest/apps.txt")
         response.raise_for_status()
         with open("apps.txt", "w") as file:
             file.write(response.text.strip())
@@ -77,7 +77,7 @@ try:
             sys.exit(1)
 
         print(f"Updating {package}...")
-        response = requests.get(f"{installurl}/assets/{package}.py")
+        response = requests.get(f"{installurl}/packages/{package}.py")
         response.raise_for_status()
         with open(app_path, "w") as file:
             file.write(response.text.strip())
@@ -95,7 +95,7 @@ try:
             sys.exit(1)
 
         print(f"Installing {package}...")
-        response = requests.get(f"{installurl}/assets/{package}.py")
+        response = requests.get(f"{installurl}/packages/{package}.py")
         response.raise_for_status()
         with open(app_path, "w") as file:
             file.write(response.text.strip())
