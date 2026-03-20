@@ -36,7 +36,7 @@ def log_and_print(message, color=None):
     logging.info(message)
 
 def display_system_info():
-    log_and_print(f"--- SkyOS BIOS v2.7 Boot ---", Colors.CYAN)
+    log_and_print(f"--- SkyOS Aurora v1.2 BIOS Boot ---", Colors.CYAN)
     log_and_print(f"Current Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", Colors.YELLOW)
 
     os_info = f"{platform.system()} {platform.release()} ({platform.machine()})"
